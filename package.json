@@ -1,0 +1,21 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@ar-js-org/ar.js": "^3.4.5",
+    "@tresjs/nuxt": "^2.1.1",
+    "aframe": "^0.1.1",
+    "nuxt": "^3.11.2",
+    "three": "^0.163.0",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  }
+}
