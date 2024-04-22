@@ -1,1 +1,0 @@
-import{_ as e,v as t,t as n,x as o}from"./DdWJMksY.js";const c={},s=o("h1",null,"gathering point",-1),r=[s];function _(a,i){return n(),t("div",null,r)}const d=e(c,[["render",_]]);export{d as default};
