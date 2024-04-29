@@ -1,11 +1,18 @@
 <template>
-    <div>
-      <h1>AR </h1>
-      <div id="ar-container"></div>
+  
+    <div id="navbar">
+      <a href="/">首頁</a>
+      <a href="/ar">AR</a>
+      <a href="/about">關於</a>
+      <a href="/point">集點</a>
     </div>
-  </template>
+    <div id="ar-container"></div>
+    <div id="map"></div>
+ 
+</template>
   
   <script setup>
+  
     useHead({
       script: [
         {
@@ -20,11 +27,20 @@
         {
           src: 'https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js'
         },
+        {
+          src: 'https://unpkg.com/leaflet/dist/leaflet.js'
+        },
+      ],
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://unpkg.com/leaflet/dist/leaflet.css'
+        },
       ],
     }),
     // 在组件挂载时执行初始化
     onMounted(() => {
-
+      
       AFRAME.registerComponent('clicker2-1', {
         init: function () {
           var el = this.el;
@@ -127,6 +143,7 @@
           });
         }
       });
+      
       // 在此添加您的 A-Frame 逻辑
       const scene = document.createElement('a-scene');
       scene.setAttribute('id', 'scene');
@@ -134,6 +151,7 @@
       scene.setAttribute('renderer', 'antialias: true; alpha: true');
       scene.setAttribute('vr-mode-ui', 'enabled: false');
       scene.setAttribute('cursor', 'rayOrigin: mouse');
+      // scene.setAttribute('embedded', '');
 
       // 创建相机
       const camera = document.createElement('a-camera');
@@ -144,8 +162,9 @@
       // 创建实体 target1
       const target1 = document.createElement('a-entity');
       target1.setAttribute('id', 'target1');
-      target1.setAttribute('material', 'color: purple');
-      target1.setAttribute('geometry', 'primitive: box');
+      // target1.setAttribute('material', 'color: purple');
+      // target1.setAttribute('geometry', 'primitive: box');
+      target1.setAttribute('gltf-model', 'url(https://raw.githubusercontent.com/Rayasd396kr/ar/main/hy.glb)');
       target1.setAttribute('gps-new-entity-place', 'latitude: 24.14977351688243; longitude: 120.68377231768088');
       target1.setAttribute('scale', '4 4 4');
       target1.setAttribute('visible', 'false');
@@ -153,14 +172,14 @@
 
       // 子元素 - 標題
       const title1 = document.createElement('a-entity');
-      title1.setAttribute('position', '0 1 0');
+      title1.setAttribute('position', '0 1.5 0');
       title1.setAttribute('look-at', '[camera]');
       const titlePlane1 = document.createElement('a-entity');
       titlePlane1.setAttribute('geometry', 'primitive: plane');
       titlePlane1.setAttribute('material', 'color: black');
       titlePlane1.setAttribute('scale', '1 0.5 0.1');
       const titleText1 = document.createElement('a-text');
-      titleText1.setAttribute('value', 'mis');
+      titleText1.setAttribute('value', 'hy1');
       titleText1.setAttribute('position', '0 0 0.2');
       titleText1.setAttribute('align', 'center');
       title1.appendChild(titlePlane1);
@@ -173,9 +192,9 @@
       showButton1.setAttribute('visible', 'false');
 
       // 添加子平面按钮
-      const addButton1 = createButton('blue', 'button1', '0 -1 0', 'clicker2-1'); 
-      const addButton2 = createButton('red', 'button2', '0.5 -1 0', 'clicker2-2'); 
-      const addButton3 = createButton('green', 'button3', '-0.5 -1 0', 'clicker2-3'); 
+      const addButton1 = createButton('blue', 'button1', '0 -0.5 0', 'clicker2-1'); 
+      const addButton2 = createButton('red', 'button2', '0.5 -0.5 0', 'clicker2-2'); 
+      const addButton3 = createButton('green', 'button3', '-0.5 -0.5 0', 'clicker2-3'); 
       showButton1.appendChild(addButton1);
       showButton1.appendChild(addButton2);
       showButton1.appendChild(addButton3);
@@ -188,8 +207,9 @@
       //target2
       const target2 = document.createElement('a-entity');
       target2.setAttribute('id', 'target2');
-      target2.setAttribute('material', 'color: red');
-      target2.setAttribute('geometry', 'primitive: box');
+      // target2.setAttribute('material', 'color: red');
+      // target2.setAttribute('geometry', 'primitive: box');
+      target2.setAttribute('gltf-model', 'url(https://raw.githubusercontent.com/Rayasd396kr/ar/main/hy.glb)');
       target2.setAttribute('gps-new-entity-place', 'latitude: 24.151025939583285; longitude: 120.68141029301923');
       target2.setAttribute('scale', '4 4 4');
       target2.setAttribute('visible', 'false');
@@ -197,14 +217,14 @@
 
       // 子元素 - 標題
       const title2 = document.createElement('a-entity');
-      title2.setAttribute('position', '0 1 0');
+      title2.setAttribute('position', '0 1.5 0');
       title2.setAttribute('look-at', '[camera]');
       const titlePlane2 = document.createElement('a-entity');
       titlePlane2.setAttribute('geometry', 'primitive: plane');
       titlePlane2.setAttribute('material', 'color: black');
       titlePlane2.setAttribute('scale', '1 0.5 0.1');
       const titleText2 = document.createElement('a-text');
-      titleText2.setAttribute('value', 'home');
+      titleText2.setAttribute('value', 'hy');
       titleText2.setAttribute('position', '0 0 0.2');
       titleText2.setAttribute('align', 'center');
       title2.appendChild(titlePlane2);
@@ -216,9 +236,9 @@
       showButton2.setAttribute('visible', 'false');
 
       // 添加子平面按钮到 showButton2
-      const addButton4 = createButton('blue', 'button1', '0 -1 0', 'clicker2-4'); 
-      const addButton5 = createButton('red', 'button2', '0.5 -1 0', 'clicker2-5'); 
-      const addButton6 = createButton('green', 'button3', '-0.5 -1 0', 'clicker2-6'); 
+      const addButton4 = createButton('blue', 'button1', '0 -0.5 0', 'clicker2-4'); 
+      const addButton5 = createButton('red', 'button2', '0.5 -0.5 0', 'clicker2-5'); 
+      const addButton6 = createButton('green', 'button3', '-0.5 -0.5 0', 'clicker2-6'); 
       showButton2.appendChild(addButton4);
       showButton2.appendChild(addButton5);
       showButton2.appendChild(addButton6);
@@ -290,6 +310,65 @@
 
       // 调用获取用户位置信息的函数
       getUserLocation();
+
+      const map = L.map('map').setView([0, 0], 10); // 设置地图的中心点和缩放级别
+      const marker = null; // 声明标记变量
+      const bounds = L.latLngBounds([40.712, -74.227], [40.774, -74.125]); // 设置地图边界
+
+      // 添加 OpenStreetMap 图层
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      let isFirstLocation = true; // 用于标记是否是第一次获取位置
+
+      function updateUserLocation() {
+          navigator.geolocation.watchPosition(function(position) {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+
+              // 设置地图中心位置
+              if (isFirstLocation) {
+                  map.setView([lat, lng], 15); // 第一次定位时缩放
+                  isFirstLocation = false; // 标记为非第一次定位
+              } else {
+                  map.panTo([lat, lng]); // 更新定位时不缩放
+              }
+
+              // 创建或更新用户位置标记
+              if (!marker) {
+                  // 创建定位的标记并设置红色图标
+                  const marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
+              } else {
+                  marker.setLatLng([lat, lng]);
+              }
+          }, function(error) {
+              console.error('获取用户位置失败:', error);
+          });
+      }
+
+      const redIcon = new L.Icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+          });
+
+      const coordinates = [
+          [24.1497901468381, 120.68376942175895],
+          [24.150484871046938, 120.68402982439738]
+      ];
+
+      // 循环添加默认样式的标记
+      coordinates.forEach(function(coord) {
+          L.marker(coord).addTo(map);
+      });
+      // 初始化时更新用户位置
+      updateUserLocation();
+
+
+
+
     });
 
     // 创建按钮元素
@@ -306,11 +385,45 @@
       button.appendChild(buttonText);
       return button;
     }
+
     
-   
+
   </script>
   
   <style scoped>
-  /* 可以添加作用域样式 */
+  
+  #navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    z-index: 100;
+  }
+  #navbar a {
+    text-decoration: none;
+    color: #333333; 
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 12px; 
+    border-radius: 4px;
+    transition: background-color 0.3s ease; 
+  }
+
+  #navbar a:hover {
+    background-color: #f0f0f0; 
+  }
+  #map{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20vh;
+  }
+    
+    
+    
   </style>
   

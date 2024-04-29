@@ -12,14 +12,12 @@
 
 <style scoped>
 .navbar-container {
-  position: fixed; /* 使用固定定位 */
-  top: 0; /* 位于页面顶部 */
+  position: fixed; 
+  top: 0; 
   left: 0;
-  width: 100%; /* 宽度占满整个页面 */
-  background-color: #ffffff; /* 背景色，可以根据需要进行调整 */
-  z-index: 1000; /* 设置 z-index，确保在其他内容上方 */
-  padding: 10px; /* 可根据需要添加内边距 */
-  
+  width: 100%;
+  height: 100%; 
+  z-index: 1000; 
 }
 
 .navbar {
@@ -30,15 +28,16 @@
 
 .navbar a {
   text-decoration: none;
-  color: #333333; /* 链接颜色 */
+  color: #333333; 
   font-size: 16px;
   font-weight: bold;
-  padding: 8px 12px; /* 链接的内边距 */
+  padding: 8px 12px; 
   border-radius: 4px;
-  transition: background-color 0.3s ease; /* 添加过渡效果 */
+  transition: background-color 0.3s ease; 
 }
 
 .navbar a:hover {
   background-color: #f0f0f0; /* 鼠标悬停时的背景色 */
 }
+
 </style>
