@@ -5,6 +5,7 @@
       <a href="/ar">AR</a>
       <a href="/about">關於</a>
       <a href="/point">集點</a>
+      <a href="/puzzle">小游戲</a>
     </div>
     <slot />
   </div>
