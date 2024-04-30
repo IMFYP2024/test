@@ -1,6 +1,8 @@
 <template>
   <div>
-    <ARScene />
+    
+      <ARScene />
+   
   </div>
 </template>
 
@@ -12,4 +14,8 @@ export default {
     ARScene
   }
 };
+definePageMeta({
+  layout: false
+})
 </script>
+
