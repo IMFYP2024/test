@@ -154,15 +154,15 @@
       },
       closeModal() {
         this.showInfoModal = false;
-      },// 处理点击模态窗口外部的事件
+      },
       closeModalOutside(event) {
-        // 检查点击的元素是否是模态窗口本身
+        
         if (event.target.classList.contains('modal-overlay')) {
           this.closeModal();
         }
       },
       handleMessage(event) {
-        console.log('Received message:', event.data); // 添加日志输出
+        console.log('Received message:', event.data); 
         const { cellId, value } = event.data;
         if (cellId && value) {
           if (cellId === 'cell-1') {
@@ -285,13 +285,13 @@
   .swiper-slide img {
     display: block;
     max-width: 100%;
-    max-height: 50%; /* 设置最大高度，确保所有图片一致 */
-    object-fit: cover; /* 保持图片比例 */
+    max-height: 50%; 
+    object-fit: cover; 
   }
   .slide-title {
     color: white;
-    height: 10%; /* 固定标题高度 */
-    margin: 0; /* 移除多余的外边距 */
+    height: 10%; 
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -299,16 +299,16 @@
   .slide-text {
     padding: 0 5%;
     color: white;
-    height: 20%; /* 固定文本区域高度 */
+    height: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* 防止文本溢出 */
+    overflow: hidden;
   }
   .slide-button {
     
-    margin-top: auto; /* 将按钮推到文本框的底部 */
-    margin-bottom: 20px; /* 设置按钮底部距离 */
+    margin-top: auto;
+    margin-bottom: 20px; 
     padding: 0.5rem 1rem;
     background-color: #fff;
     color: #000;
@@ -328,7 +328,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 200; /* 设置一个较高的 z-index */
+    z-index: 200; 
   }
 
   .modal-content {
@@ -336,9 +336,9 @@
     padding: 20px;
     margin: auto;
     border-radius: 10px;
-    max-width: 80%; /* 相对于父元素宽度为 80% */
+    max-width: 80%; 
     text-align: center;
-    z-index: 300; /* 设置比 .modal-overlay 更高的 z-index */
+    z-index: 300; 
     position: absolute;
     top: 0;
     bottom: 0;

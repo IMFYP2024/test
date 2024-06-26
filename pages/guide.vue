@@ -36,7 +36,7 @@
     isMenuOpen.value = !isMenuOpen.value;
   };
   
-  // 使用 useHead 加载外部脚本和样式表
+  
   useHead({
     script: [
       { src: 'https://aframe.io/releases/1.3.0/aframe.min.js' },
@@ -57,7 +57,7 @@
         navigator.geolocation.watchPosition(function(position) {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
-          // 处理位置信息并根据距离显示/隐藏目标
+          
         });
       } else {
         console.error('Geolocation is not supported by this browser.');
@@ -65,39 +65,35 @@
     }
     getUserLocation();
   
-    map = L.map('map').setView([0, 0], 15); // 设置地图的中心点和缩放级别
-    let marker = null; // 声明标记变量
+    map = L.map('map').setView([0, 0], 15); 
+    let marker = null; 
   
-    // 添加 OpenStreetMap 图层
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
   
-    let isFirstLocation = true; // 用于标记是否是第一次获取位置
+    let isFirstLocation = true; 
     
     function updateUserLocation() {
       navigator.geolocation.watchPosition(function(position) {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         
-        // 设置地图中心位置
         if (isFirstLocation) {
-          map.setView([lat, lng], 15); // 第一次定位时缩放
-          isFirstLocation = false; // 标记为非第一次定位
+          map.setView([lat, lng], 15); 
+          isFirstLocation = false; 
         } else {
-          map.panTo([lat, lng]); // 更新定位时不缩放
+          map.panTo([lat, lng]); 
         }
   
-        // 如果已经有标记存在，则先移除
         if (marker) {
           map.removeLayer(marker);
         }
   
-        // 创建新的用户位置标记
         marker = L.marker([lat, lng], { icon: redIcon }).addTo(map);
   
       }, function(error) {
-        console.error('获取用户位置失败:', error);
+        console.error('獲取位置失敗:', error);
       });
     }
   
@@ -109,31 +105,26 @@
       shadowSize: [41, 41]
     });
   
-    // 循环添加默认样式的标记
     coordinates.value.forEach(function(coord) {
       L.marker(coord).addTo(map);
     });
   
-    // 初始化时更新用户位置
     updateUserLocation();
   });
   
   const addCoordinate = (coord) => {
-    // 清空现有的坐标和标记
     coordinates.value = [];
     markers.forEach(marker => {
         map.removeLayer(marker);
     });
     markers = [];
 
-    // 添加新坐标
     coordinates.value.push(coord);
     const newMarker = L.marker(coord).addTo(map);
     markers.push(newMarker);
     };
 
     const clearCoordinates = () => {
-    // 清空坐标数组和地图上的标记
     coordinates.value = [];
     markers.forEach(marker => {
         map.removeLayer(marker);
@@ -149,7 +140,7 @@
     left: 0;
     width: 100%;
     height: 30%;
-    transition: transform 0.58s ease; /* 添加过渡效果 */
+    transition: transform 0.58s ease; 
   }
   
   #side-menu {
@@ -162,7 +153,7 @@
     color: white;
     overflow-x: hidden;
     transition: transform 0.3s ease;
-    transform: translateX(250px); /* 初始隐藏在右侧 */
+    transform: translateX(250px); 
     z-index: 1000;
   }
   
@@ -186,7 +177,7 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
-    padding-top: 60px; /* 留出空间给按钮 */
+    padding-top: 60px; 
   }
   
   #side-menu ul li {

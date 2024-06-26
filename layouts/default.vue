@@ -31,12 +31,12 @@
 export default {
   data() {
     return {
-      currentPage: '' // 当前页面，初始化为空
+      currentPage: '' 
     };
   },
   computed: {
     lineLeftPosition() {
-      // 根据当前页面计算线条位置
+      
       switch (this.currentPage) {
         case 'ar':
           return 'calc(0%)';
@@ -53,17 +53,17 @@ export default {
   },
   watch: {
     $route(to) {
-      // 监视路由变化，更新 currentPage
+      
       this.updateCurrentPage(to.path);
     }
   },
   mounted() {
-    // 在组件挂载时，根据当前路由初始化 currentPage
+    
     this.updateCurrentPage(this.$route.path);
   },
   methods: {
     updateCurrentPage(path) {
-      // 根据路由路径更新当前页面
+      
       switch (path) {
         case '/ar':
           this.currentPage = 'ar';
@@ -98,8 +98,8 @@ export default {
   background-color: #ffffff;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  padding: 10px 0; /* 移除padding以确保导航栏与屏幕边缘贴合 */  
-  box-sizing: border-box; /* 确保padding计入整体宽度 */
+  padding: 10px 0; 
+  box-sizing: border-box; 
 }
 
 .navbar {
@@ -109,7 +109,7 @@ export default {
   width: 100%;
   height: 100%;
   padding: 0;
-  box-sizing: border-box; /* 确保padding计入整体宽度 */
+  box-sizing: border-box; 
 }
 
 .nav-link {
@@ -123,8 +123,8 @@ export default {
   font-weight: bold;
   padding: 8px;
   transition: color 0.3s ease;
-  flex: 1; /* 确保每个按钮平分导航栏宽度 */
-  text-align: center; /* 确保文本居中 */
+  flex: 1; 
+  text-align: center; 
 }
 
 .nav-link.active {

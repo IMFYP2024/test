@@ -19,8 +19,8 @@ iframe {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: white; /* 覆盖颜色可以根据你的需要自定义 */
-  z-index: 100; /* 确保覆盖在视频上方 */
+  background-color: white; 
+  z-index: 100; 
 }
 </style>
 
@@ -28,7 +28,6 @@ iframe {
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-// 接收路由传递过来的值
 const imageUrl = route.query.image || '';
 </script>
 
@@ -37,14 +36,13 @@ export default {
   mounted() {
     window.addEventListener('message', this.handleRecognitionResult);
   },
-  beforeUnmount() { // 注意这里的生命周期钩子名称
+  beforeUnmount() { 
     window.removeEventListener('message', this.handleRecognitionResult);
   },
   methods: {
     handleRecognitionResult(event) {
-      // 检查消息来源 (可选，视情况决定是否启用)
-      // if (event.origin !== 'trusted_origin') return;
-      //console.log('Received message:', event.data);
+      
+      
       const { cellId, value } = event.data;
       if (cellId && value) {
         window.parent.postMessage({ cellId, value }, '*');
