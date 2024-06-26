@@ -7,12 +7,16 @@
       <a href="/point">集點</a>
     </div>
     <div id="ar-container"></div>
-    <div id="map"></div>
+    
+    <div id="map-container" :class="mapContainerClass">
+      <button id="map-button" @click="toggleMap">{{ buttonText }}</button>
+      <div id="map" ></div>
+    </div>
  
 </template>
   
   <script setup>
-  
+  import { ref, computed } from 'vue';
     useHead({
       script: [
         {
@@ -70,7 +74,7 @@
             // 如果按钮可见，则执行点击事件的功能
             if (buttonVisible) {
               // 在这里添加点击功能的代码
-              alert('2');
+              window.location.href = "/introduce";
             }
           });
         }
@@ -121,7 +125,7 @@
             // 如果按钮可见，则执行点击事件的功能
             if (buttonVisible) {
               // 在这里添加点击功能的代码
-              alert('2');
+              window.location.href = "/introduce";
             }
           });
         }
@@ -311,8 +315,8 @@
       // 调用获取用户位置信息的函数
       getUserLocation();
 
-      const map = L.map('map').setView([0, 0], 10); // 设置地图的中心点和缩放级别
-      const marker = null; // 声明标记变量
+      const map = L.map('map').setView([0, 0], 15); // 设置地图的中心点和缩放级别
+      let marker = null; // 声明标记变量
       const bounds = L.latLngBounds([40.712, -74.227], [40.774, -74.125]); // 设置地图边界
 
       // 添加 OpenStreetMap 图层
@@ -320,12 +324,12 @@
           attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
       let isFirstLocation = true; // 用于标记是否是第一次获取位置
-
+      
       function updateUserLocation() {
           navigator.geolocation.watchPosition(function(position) {
               const lat = position.coords.latitude;
               const lng = position.coords.longitude;
-
+              
               // 设置地图中心位置
               if (isFirstLocation) {
                   map.setView([lat, lng], 15); // 第一次定位时缩放
@@ -334,17 +338,19 @@
                   map.panTo([lat, lng]); // 更新定位时不缩放
               }
 
-              // 创建或更新用户位置标记
-              if (!marker) {
-                  // 创建定位的标记并设置红色图标
-                  const marker = L.marker([lat, lng], {icon: redIcon}).addTo(map);
-              } else {
-                  marker.setLatLng([lat, lng]);
+              // 如果已经有标记存在，则先移除
+              if (marker) {
+                  map.removeLayer(marker);
               }
+
+              // 创建新的用户位置标记
+              marker = L.marker([lat, lng], { icon: redIcon }).addTo(map);
+
           }, function(error) {
               console.error('获取用户位置失败:', error);
           });
       }
+
 
       const redIcon = new L.Icon({
           iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
@@ -385,7 +391,15 @@
       button.appendChild(buttonText);
       return button;
     }
+    const isExpanded = ref(true);
 
+    const buttonText = computed(() => (isExpanded.value ? '收起地圖' : '展開地圖'));
+
+    const mapContainerClass = computed(() => (isExpanded.value ? 'expanded' : 'collapsed'));
+
+    const toggleMap = () => {
+      isExpanded.value = !isExpanded.value;
+    };
     
 
   </script>
@@ -415,15 +429,32 @@
   #navbar a:hover {
     background-color: #f0f0f0; 
   }
-  #map{
+  #map {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 20vh;
+    transition: transform 0.5s ease; /* 添加过渡效果 */
   }
-    
-    
-    
+
+  #map-button {
+      position: absolute;
+      bottom: 20%; /* 初始位置距离底部的距离 */
+      width: 100px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 100;
+      transition: transform 0.5s ease; /* 添加过渡效果 */
+  }
+
+  .collapsed #map {
+    transform: translateY(100%); /* 地图隐藏时向下滑动 */
+  }
+  .collapsed #map-button {
+    transform: translateY(+20vh); /* 按钮的高度 */
+  }
   </style>
   

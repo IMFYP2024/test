@@ -5,3 +5,11 @@
 // export default defineNuxtConfig({
 //   modules: ["@tresjs/nuxt"],
 // });
+export default defineNuxtConfig({
+    
+    nitro: {
+      preset: 'cloudflare' // 預設為 node-server
+    },
+    
+  })
+  
