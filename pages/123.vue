@@ -16,6 +16,15 @@
     </div>
     <button id="menu-toggle" @click="toggleMenu">☰</button>
     <div id="map"></div>
+    <div id="compass">
+      <div id="compass-needle"></div>
+      <div id="compass-directions">
+        <span class="direction" id="north">N</span>
+        <span class="direction" id="east">E</span>
+        <span class="direction" id="south">S</span>
+        <span class="direction" id="west">W</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -231,13 +240,21 @@ onMounted(() => {
 
   const arContainer = document.getElementById('ar-container');
   arContainer.appendChild(scene);
+  window.addEventListener('deviceorientation', handleOrientation);
 });
 
 onBeforeUnmount(() => {
   if (watchId) {
     navigator.geolocation.clearWatch(watchId);
   }
+  window.removeEventListener('deviceorientation', handleOrientation);
 });
+
+const handleOrientation = (event) => {
+  const alpha = event.alpha;
+  const needle = document.getElementById('compass-needle');
+  needle.style.transform = `rotate(${alpha}deg)`;
+};
 </script>
 
 <style scoped>
@@ -334,5 +351,65 @@ onBeforeUnmount(() => {
   background-color: #007bff;
   color: white;
   cursor: pointer;
+}
+#compass {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#compass-needle {
+  width: 50%;
+  height: 2px;
+  background: red;
+  position: absolute;
+  transform-origin: center center;
+}
+
+#compass-directions {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.direction {
+  position: absolute;
+  font-size: 14px;
+}
+
+#north {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#east {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#south {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#west {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>

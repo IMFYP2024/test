@@ -151,7 +151,7 @@
     scene.setAttribute('cursor', 'rayOrigin: mouse');
     // scene.setAttribute('embedded', '');
 
-    // 创建相机
+    
     const camera = document.createElement('a-camera');
     camera.setAttribute('id', 'camera');
     camera.setAttribute('gps-new-camera', 'gpsMinDistance: 5');
