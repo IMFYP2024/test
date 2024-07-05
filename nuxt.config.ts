@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 export default defineNuxtConfig({
    
   });
-=======
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // export default defineNuxtConfig({
 //   devtools: { enabled: true }
@@ -18,4 +16,3 @@ export default defineNuxtConfig({
     
   })
   
->>>>>>> 6d40658b1555c486d607cae3f1a77556882c1d4c
