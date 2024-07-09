@@ -2,15 +2,15 @@
   <div>
     <div id="ar-container"></div>
     <div id="distance-display">距離: {{ distance.toFixed(2) }} 公尺</div>
-    <div id="azimuth-display">方位角: {{ azimuth.toFixed(2) }} 度</div>
     <div id="side-menu" :class="{ open: isMenuOpen }">
       <div class="search-container">
-        <input type="text" v-model="searchQuery" placeholder="搜尋地點" />
+        <input type="text" v-model="searchQuery" placeholder="教室編號" />
         <button @click="handleSearch">送出</button>
       </div>
       <ul>
-        <li><button @click="addCoordinate('target1', [24.149687287189632, 120.68297905956476])">測試1</button></li>
-        <li><button @click="addCoordinate('target2', [24.1514351979012, 120.68242524993458])">測試2</button></li>
+        <li><button @click="addCoordinate('target1', [24.149687287189632, 120.68297905956476])">中正樓</button></li>
+        <li><button @click="addCoordinate('target2', [24.1514351979012, 120.68242524993458])">中商大樓</button></li>
+        <li><button @click="addCoordinate('target3', [24.149761545708383, 120.68367990956797])">資訊樓</button></li>
         <li><button @click="clearCoordinates">取消</button></li>
       </ul>
     </div>
@@ -38,6 +38,7 @@ useHead({
 
 const distance = ref(0);
 const azimuth = ref(0);
+const create = ref(null);
 const isMenuOpen = ref(false);
 const searchQuery = ref('');
 let map = null;
@@ -72,9 +73,7 @@ function toRad(degrees) {
   return degrees * Math.PI / 180;
 }
 
-function toDeg(radians) {
-  return radians * 180 / Math.PI;
-}
+
 
 const calculateDistance = () => {
   if (userPosition && targetCoordinates) {
@@ -83,22 +82,14 @@ const calculateDistance = () => {
   }
 };
 
-const calculateAzimuth = () => {
-  if (userPosition && targetCoordinates) {
-    const y = Math.sin(toRad(targetCoordinates[1] - userPosition.lng)) * Math.cos(toRad(targetCoordinates[0]));
-    const x = Math.cos(toRad(userPosition.lat)) * Math.sin(toRad(targetCoordinates[0])) -
-              Math.sin(toRad(userPosition.lat)) * Math.cos(toRad(targetCoordinates[0])) *
-              Math.cos(toRad(targetCoordinates[1] - userPosition.lng));
-    azimuth.value = (toDeg(Math.atan2(y, x)) + 360) % 360;
-    console.log('方位角為', azimuth.value);
-  }
-};
+
 
 const addCoordinate = (targetId, coord) => {
+  clearCoordinates();
   targetCoordinates = coord;
   if (userPosition) {
     calculateDistance();
-    calculateAzimuth();
+    create.value(userPosition, targetCoordinates);
   } else {
     console.error('獲取不到使用者位置');
   }
@@ -122,11 +113,6 @@ const addCoordinate = (targetId, coord) => {
 
   markers.push(newMarker);
 
-  const targets = document.querySelectorAll('a-entity[gps-new-entity-place]');
-  targets.forEach(target => {
-    target.setAttribute('visible', 'false');
-  });
-
   const target = document.getElementById(targetId);
   if (target) {
     target.setAttribute('visible', 'true');
@@ -144,6 +130,12 @@ const clearCoordinates = () => {
   targets.forEach(target => {
     target.setAttribute('visible', 'false');
   });
+
+  const directionEntity = document.getElementById('direction');
+  if (directionEntity) {
+    directionEntity.parentNode.removeChild(directionEntity);
+  }
+  
   distance.value = 0;
   azimuth.value = 0;
   targetCoordinates = null;
@@ -153,10 +145,10 @@ const handleSearch = () => {
   const searchValue = searchQuery.value;
   if (searchValue.length > 0) {
     const firstChar = searchValue.charAt(0);
-    if (firstChar === '1') {
+    if (firstChar === '3') {
       addCoordinate('target1', [24.149687287189632, 120.68297905956476]);
     } else if (firstChar === '2') {
-      addCoordinate('target2', [24.1514351979012, 120.68242524993458]);
+      addCoordinate('target3', [24.149761545708383, 120.68367990956797]);
     }
   }
 };
@@ -187,7 +179,6 @@ onMounted(() => {
         console.log('更新使用者經緯度', userPosition);
         userMarker.setLatLng([userPosition.lat, userPosition.lng]);
         calculateDistance();
-        calculateAzimuth();
       }, (error) => {
         console.error('更新使用者位置失敗', error);
       });
@@ -204,7 +195,7 @@ onMounted(() => {
   scene.setAttribute('renderer', 'antialias: true; alpha: true');
   scene.setAttribute('vr-mode-ui', 'enabled: false');
   scene.setAttribute('cursor', 'rayOrigin: mouse');
-
+  
   const camera = document.createElement('a-camera');
   camera.setAttribute('id', 'camera');
   camera.setAttribute('gps-new-camera', '');
@@ -216,7 +207,7 @@ onMounted(() => {
     target.setAttribute('gps-new-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
     target.setAttribute('scale', '4 4 4');
     target.setAttribute('visible', 'false');
-    target.setAttribute('look-at', '[camera]');
+    // target.setAttribute('look-at', '[camera]');
 
     const modelContainer = document.createElement('a-entity');
     modelContainer.setAttribute('gltf-model', `url(${modelUrl})`);
@@ -226,8 +217,47 @@ onMounted(() => {
     scene.appendChild(target);
   };
 
-  createARObject('target1', 24.14977351688243, 120.68377231768088, 'https://raw.githubusercontent.com/Rayasd396kr/ar/main/redlandmark.glb');
+  createARObject('target1', 24.14977351688243, 120.68377231768088, 'https://raw.githubusercontent.com/Rayasd396kr/ar/main/bluenew.glb');
   createARObject('target2', 24.151025939583285, 120.68141029301923, 'https://raw.githubusercontent.com/Rayasd396kr/ar/main/redlandmark.glb');
+  createARObject('target3', 24.149761545708383, 120.68367990956797, 'https://raw.githubusercontent.com/Rayasd396kr/ar/main/redlandmark.glb');
+
+
+  create.value = (startPosition, endPosition) => {
+    const distance = haversineDistance(startPosition.lat, startPosition.lng, endPosition[0], endPosition[1]);
+
+    const intervalDistance = 10; 
+
+    let accumulatedDistance = intervalDistance;
+
+    while (accumulatedDistance < distance) {
+      const ratio = accumulatedDistance / distance;
+      const waypoint = {
+        lat: startPosition.lat + ratio * (endPosition[0] - startPosition.lat),
+        lng: startPosition.lng + ratio * (endPosition[1] - startPosition.lng)
+      };
+      console.log(waypoint);
+      generateARObject(waypoint.lat, waypoint.lng);
+      accumulatedDistance += intervalDistance;
+    }
+  };
+  const generateARObject = (latitude, longitude) => {
+  const arEntity = document.createElement('a-entity');
+  arEntity.setAttribute('id', 'direction');
+  arEntity.setAttribute('gps-new-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
+  arEntity.setAttribute('scale', '4 4 4');
+  arEntity.setAttribute('visible', 'true');
+  // arEntity.setAttribute('look-at', '[camera]');
+  const arModelContainer = document.createElement('a-entity');
+  arModelContainer.setAttribute('gltf-model', 'url(https://raw.githubusercontent.com/Rayasd396kr/ar/main/Project.glb)');
+  arModelContainer.setAttribute('animation-mixer', '');
+
+  arEntity.appendChild(arModelContainer);
+  scene.appendChild(arEntity);
+};
+ 
+
+
+
 
   const arContainer = document.getElementById('ar-container');
   arContainer.appendChild(scene);
@@ -284,7 +314,7 @@ onBeforeUnmount(() => {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  padding-top: 60px;
+  
 }
 
 #side-menu ul li {

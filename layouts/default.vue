@@ -144,7 +144,7 @@ export default {
   transition: left 0.3s ease;
 }
 
-/* 媒体查询 */
+
 @media (max-width: 600px) {
   .nav-link {
     font-size: 10px;
