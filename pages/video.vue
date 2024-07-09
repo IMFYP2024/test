@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>Video Player</h1>
+      <h1>大樓介紹</h1>
       <VideoPlayer />
     </div>
   </template>
