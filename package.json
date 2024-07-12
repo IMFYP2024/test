@@ -16,7 +16,7 @@
     "leaflet": "^1.9.4",
     "mind-ar": "^1.2.5",
     "nuxt": "^3.11.2",
-    "swiper": "^11.1.4",
+    "swiper": "^8.0.0",
     "three": "^0.163.0",
     "vue": "^3.4.21",
     "vue-awesome-swiper": "^5.0.1",
