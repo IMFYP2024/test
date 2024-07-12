@@ -168,8 +168,8 @@ onMounted(() => {
 }
 
 #pieces img {
-  width: 85px;
-  height: 85px;
+  width: 80px;
+  height: 80px;
   border: 0.5px solid lightblue;
 }
 
