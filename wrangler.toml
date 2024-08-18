@@ -1,8 +1,12 @@
+
 name = "nuxt-app-hello"
 main = "./.output/server/index.mjs"
 workers_dev = true
 compatibility_date = "2022-10-15"
-account_id = '004965c75029fe395a6f731a925a69c5'
 
 [site]
 bucket = ".output/public"
+
+[vars]
+DATABASE_URL = "postgres://<username>:<password>@<host>"
+

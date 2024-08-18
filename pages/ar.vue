@@ -437,7 +437,7 @@
 
    
     const v2rightButton = document.createElement('a-image');
-    v2rightButton.setAttribute('src', '../Images/right.png');
+    v2rightButton.setAttribute('src', './Images/right.png');
     v2rightButton.setAttribute('width', '0.5');
     v2rightButton.setAttribute('height', '0.5');
     v2rightButton.setAttribute('position', '1.2 1.7 0');
